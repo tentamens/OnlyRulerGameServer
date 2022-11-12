@@ -1,0 +1,14 @@
+{
+    "Knight": {
+        "Damage": 10,
+        "Health": 100,
+        "Speed": 150
+
+    },
+    "Catapult": {
+        "Damage": 35,
+        "Health": 10,
+        "Speed": 85,
+        "ShootTimer": 1
+    }
+}
