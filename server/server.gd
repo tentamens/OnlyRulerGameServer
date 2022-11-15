@@ -1,10 +1,12 @@
 extends Node
 
+var expected_Tokens = []
+
 
 onready var user_count = $Control/User_count
 
 var user_num = 0
-var instance_num
+var instance_num = 0
 
 
 var network = NetworkedMultiplayerENet.new()
@@ -28,17 +30,14 @@ func _player_connected(player_id):
 	user_num += 1
 	instance_num += 1
 	print("Player: " + str(player_id) + " Connected")
-	user_count.text = str(user_num)
-	get_node("Control/HBoxContainer2/InstanceCount").text = str(instance_num)
 
 
 func _player_disconnected(player_id):
-	get_node(str(player_id)).queue_free()
-	user_num +- 1
+	if has_node(str(player_id)):
+		get_node(str(player_id)).queue_free()
+	user_num =- 1
 	instance_num -= 1
 	print("Player: " + str(player_id) + " Disconnected")
-	user_count.text = str(user_num)
-	get_node("Control/HBoxContainer2/InstanceCount").text = str(instance_num)
 
 remote func Fetch_Data(skill_name, requester):
 	var player_id = get_tree().get_rpc_sender_id()
@@ -48,3 +47,30 @@ remote func Fetch_Data(skill_name, requester):
 
 func Get_server_id(player_id):
 	print(player_id)
+
+
+func _on_TokenExpiration_timeout():
+	var current_time = OS.get_unix_time()
+	var token_time
+	if expected_Tokens == []:
+		print("No tokens")
+		pass
+	else:
+		for i in range(expected_Tokens.size() -1, -1, -1):
+			token_time = int(expected_Tokens[i].right(64))
+			if current_time - token_time >= 30:
+				expected_Tokens.remove(i)
+	print("Expected Tokens:")
+	print(expected_Tokens)
+
+func FetchToken(player_id):
+	print("sending out fetch token")
+	rpc_id(player_id, "FetchToken")
+
+remote func ReturnToken(token):
+	var player_id = get_tree().get_rpc_sender_id()
+	PlayerVerification.Verify(player_id, token)
+
+func ReturnTokenVerificationResults(player_id, result):
+		rpc_id(player_id, "ReturnTokenVerificationResults", result)
+

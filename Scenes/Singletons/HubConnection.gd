@@ -40,7 +40,7 @@ func _OnConnectionSucceeded():
 
 
 remote func ReceiveLoginToken(token):
-	gameserver.expected_tokens.append(token)
+	gameserver.expected_Tokens.append(token)
 
 
 

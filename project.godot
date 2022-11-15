@@ -21,6 +21,7 @@ DataBaseServer="*res://server/Data_Base_server.gd"
 PlayerContainer="*res://Scenes/Instances/PlayerContainer.gd"
 PlayerVerification="*res://Scenes/Instances/playerVerification.gd"
 Server="*res://server/server.gd"
+HubConnection="*res://Scenes/Singletons/HubConnection.gd"
 
 [physics]
 
