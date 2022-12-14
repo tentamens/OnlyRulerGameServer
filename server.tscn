@@ -88,5 +88,14 @@ autostart = true
 [node name="StateProcessing" type="Node" parent="."]
 script = ExtResource( 4 )
 
+[node name="Button" type="Button" parent="."]
+margin_left = 504.0
+margin_top = 163.0
+margin_right = 516.0
+margin_bottom = 183.0
+rect_scale = Vector2( 4.509, 4.509 )
+
 [connection signal="timeout" from="playerVerification/VerificationExpiration" to="playerVerification" method="_on_VerificationExpiration_timeout"]
 [connection signal="timeout" from="TokenExpiration" to="." method="_on_TokenExpiration_timeout"]
+[connection signal="pressed" from="Button" to="playerVerification" method="_on_Button_pressed"]
+[connection signal="pressed" from="Button" to="StateProcessing" method="_on_Button_pressed"]

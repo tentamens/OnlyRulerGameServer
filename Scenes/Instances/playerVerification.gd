@@ -56,7 +56,10 @@ func _on_VerificationExpiration_timeout():
 				if connected_peers.has(key):
 					main_interface.ReturnTokenVerificationResults(key, false)
 					main_interface.network.disconnect_peer(key)
-	print("Awaiting Verification")
-	print(awaiting_varifitcation)
 	
 	
+
+
+func _on_Button_pressed() -> void:
+	awaiting_varifitcation.clear()
+	Server.Erase_Connections()
